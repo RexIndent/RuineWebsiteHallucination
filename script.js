@@ -558,6 +558,15 @@
     if (entered) blinkTo(a.dataset.t);
   }));
 
+  /* ---------- photo fallback (shows a placeholder if a photo file is missing) ---------- */
+  const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const placeholder = alt => 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80"><rect width="120" height="80" fill="#1A1528"/><text x="60" y="44" fill="#D1D1D1" font-family="serif" font-size="7" text-anchor="middle">' + esc(alt) + '</text></svg>');
+  $$('img.photo').forEach(img => {
+    const fix = () => { if (!img.dataset.ph) { img.dataset.ph = '1'; img.src = placeholder(img.alt); } };
+    img.addEventListener('error', fix);
+    if (img.complete && img.naturalWidth === 0) fix();
+  });
+
   /* ---------- image zoom + descent ---------- */
   const zoom = $('#zoom'), zimg = $('#zimg'), zbox = $('#zbox'), zred = $('#zred'), zcap = $('#zcap'), zfx = $('#zfx');
   let zo = null, zp = 0, zT = null, zD = null, zLabel = '';
@@ -595,7 +604,7 @@
       zimg.appendChild(l);
     });
     zfx.innerHTML = '';
-    zLabel = src.getAttribute('aria-label') || '';
+    zLabel = src.alt || '';
     zcap.textContent = zLabel;
     zo = { t0: performance.now(), whispered: false };
     zp = 0;
@@ -616,7 +625,7 @@
     setTimeout(() => { if (!zo) { zimg.innerHTML = ''; zfx.innerHTML = ''; zimg.style.filter = ''; } }, 500);
   }
 
-  $$('.ic svg, .portrait svg').forEach(s => {
+  $$('.ic img, .portrait img').forEach(s => {
     s.tabIndex = 0;
     s.setAttribute('role', 'button');
     s.addEventListener('click', () => openZoom(s));

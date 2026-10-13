@@ -372,8 +372,10 @@ h3 { font-size: 20px; letter-spacing: .04em; }
     radial-gradient(circle at 70% 80%, var(--c2), var(--void));
 }
 
-/* svg images */
-.ic svg { width: 100%; height: auto; display: block; margin-bottom: 16px; opacity: .9; }
+/* photos: put your own pictures in the images folder (same file names), or change the src in index.html */
+.photo { display: block; object-fit: cover; background: var(--ash); }
+
+.ic img { width: 100%; height: auto; aspect-ratio: 3 / 2; margin-bottom: 16px; opacity: .9; }
 
 .portrait {
   float: right;
@@ -382,7 +384,7 @@ h3 { font-size: 20px; letter-spacing: .04em; }
   border: 1px solid var(--blood);
 }
 
-.portrait svg { display: block; width: 100%; height: auto; }
+.portrait img { width: 100%; height: auto; aspect-ratio: 5 / 6; }
 
 /* footer + social links */
 footer { padding: 12vh 7vw 8vh; font-size: 14px; }
@@ -433,8 +435,8 @@ footer p { opacity: .5; margin: 0; }
 }
 
 /* image zoom + descent */
-.ic svg, .portrait svg { cursor: zoom-in; }
-.ic svg:focus-visible, .portrait svg:focus-visible { outline: 2px solid var(--noise); outline-offset: 3px; }
+.ic img, .portrait img { cursor: zoom-in; }
+.ic img:focus-visible, .portrait img:focus-visible { outline: 2px solid var(--noise); outline-offset: 3px; }
 
 #zoom {
   position: fixed;
@@ -453,7 +455,7 @@ footer p { opacity: .5; margin: 0; }
 #zbox { position: relative; text-align: center; will-change: transform; }
 #zimg { position: relative; display: inline-block; }
 .zl { position: relative; }
-.zl svg { display: block; height: min(66vh, 560px); width: auto; max-width: 90vw; }
+.zl img { display: block; height: min(66vh, 560px); width: auto; max-width: 90vw; object-fit: contain; }
 .zl.g1, .zl.g2 { position: absolute; inset: 0; mix-blend-mode: screen; opacity: var(--g, 0); }
 .zl.g1 { transform: translate(var(--dx, 0), calc(var(--dx, 0px) * -.3)); filter: sepia(1) saturate(8) hue-rotate(-45deg); }
 .zl.g2 { transform: translate(calc(var(--dx, 0px) * -1), calc(var(--dx, 0px) * .3)); filter: hue-rotate(170deg) saturate(3); }
